@@ -17,9 +17,7 @@ class Post(BaseModel):
         'Category', on_delete=models.SET_NULL, null=True, blank=False,
         verbose_name='Категория')
     pub_date = models.DateTimeField('Дата и время публикации',
-                                help_text='Если установить дату и время\
-                                в будущем — можно делать отложенные \
-                                публикации.')
+                                    help_text='Если установить дату и время в будущем — можно делать отложенные публикации.')
 
     class Meta:
         verbose_name = 'публикация'
@@ -33,9 +31,7 @@ class Category(BaseModel):
     title = models.CharField('Заголовок', max_length=256)
     description = models.TextField('Описание')
     slug = models.SlugField('Идентификатор', unique=True,
-                            help_text='Идентификатор страницы для URL;\
-                            разрешены символы латиницы, цифры, дефис и\
-                            подчёркивание.')
+                            help_text='Идентификатор страницы для URL; разрешены символы латиницы, цифры, дефис и подчёркивание.')
 
     class Meta:
         verbose_name = 'категория'
