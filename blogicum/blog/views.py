@@ -28,6 +28,7 @@ def category_posts(request, category_slug):
 
 def post_detail(request, post_id):
     post = get_object_or_404(Post.objects.filter(is_published=True),
-                             pk=post_id, pub_date__lte=date.today(), category__is_published=True)
+                             pk=post_id, pub_date__lte=date.today(),
+                             category__is_published=True)
     context = {'post': post}
     return render(request, 'blog/detail.html', context)
