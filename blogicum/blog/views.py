@@ -1,5 +1,5 @@
-from django.shortcuts import get_object_or_404, get_list_or_404, render
-from datetime import datetime
+from django.shortcuts import get_object_or_404, render
+from datetime import date
 from .models import Post, Category
 
 # post_dict = {post['id']: post for post in posts}
@@ -7,7 +7,7 @@ from .models import Post, Category
 
 def index(request):
     post = Post.objects.filter(
-        pub_date=datetime.today(),
+        pub_date__lte=date.today(),
         is_published=True,
         category__is_published=True).order_by('-pub_date')[:5]
     context = {'post_list': post}
@@ -19,6 +19,7 @@ def category_posts(request, category_slug):
         Category.objects.values('title', 'description')
         .filter(is_published=True), slug=category_slug)
     post_list = Post.objects.filter(
+        pub_date__gte=date.today(),
         category__slug=category_slug)
     context = {'category': posts_of_category,
                'post_list': post_list}
@@ -26,7 +27,7 @@ def category_posts(request, category_slug):
 
 
 def post_detail(request, post_id):
-    post = get_object_or_404(Post.objects.filter(
-        pk=post_id), pub_date__gte=datetime.today, is_published=False, category__is_published=False)
+    post = get_object_or_404(Post.objects.filter(is_published=True),
+                             pk=post_id, pub_date__lte=date.today(), category__is_published=True)
     context = {'post': post}
     return render(request, 'blog/detail.html', context)
