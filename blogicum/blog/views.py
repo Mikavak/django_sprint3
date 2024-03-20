@@ -1,5 +1,4 @@
 from django.shortcuts import get_object_or_404, render
-from django.db.models import Q
 from datetime import date
 from .models import Post, Category
 
