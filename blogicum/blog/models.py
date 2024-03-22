@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth import get_user_model
 from core.models import BaseModel
+from . import constant as c
 
 User = get_user_model()
 
@@ -9,13 +10,15 @@ class Post(BaseModel):
     title = models.CharField('Заголовок', max_length=256)
     text = models.TextField('Текст')
     author = models.ForeignKey(
-        User, on_delete=models.CASCADE, verbose_name='Автор публикации')
+        User, on_delete=models.CASCADE, verbose_name='Автор публикации',
+        related_name='posts_of_this_author')
     location = models.ForeignKey(
         'Location', on_delete=models.SET_NULL, null=True, blank=True,
-        verbose_name='Местоположение')
+        verbose_name='Местоположение',
+        related_name='post_write_in_this_location')
     category = models.ForeignKey(
         'Category', on_delete=models.SET_NULL, null=True, blank=False,
-        verbose_name='Категория')
+        verbose_name='Категория', related_name='post_of_category')
     pub_date = models.DateTimeField(
         'Дата и время публикации',
         help_text=('Если установить дату и время в будущем'
@@ -24,9 +27,7 @@ class Post(BaseModel):
     class Meta:
         verbose_name = 'публикация'
         verbose_name_plural = 'Публикации'
-
-    def __str__(self):
-        return self.title
+        ordering = ['-pub_date',]
 
 
 class Category(BaseModel):
@@ -41,9 +42,6 @@ class Category(BaseModel):
     class Meta:
         verbose_name = 'категория'
         verbose_name_plural = 'Категории'
-
-    def __str__(self):
-        return self.title
 
 
 class Location(BaseModel):
