@@ -1,7 +1,6 @@
 from django.db import models
 from django.contrib.auth import get_user_model
 from core.models import BaseModel
-from . import constant as c
 
 User = get_user_model()
 
@@ -27,7 +26,7 @@ class Post(BaseModel):
     class Meta:
         verbose_name = 'публикация'
         verbose_name_plural = 'Публикации'
-        ordering = ['-pub_date',]
+        ordering = ['-pub_date', ]
 
 
 class Category(BaseModel):
