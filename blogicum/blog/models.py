@@ -1,7 +1,7 @@
 from django.contrib.auth import get_user_model
 from django.db import models
 
-from blog.constant import MAX_LIEGHT_FOR_CHARFIELD
+from blog.constant import MAX_CHARFIELD_LENGHT
 from core.models import BaseModel
 
 
@@ -9,7 +9,7 @@ User = get_user_model()
 
 
 class Post(BaseModel):
-    title = models.CharField('Заголовок', max_length=MAX_LIEGHT_FOR_CHARFIELD)
+    title = models.CharField('Заголовок', max_length=MAX_CHARFIELD_LENGHT)
     text = models.TextField('Текст')
     author = models.ForeignKey(
         User, on_delete=models.CASCADE, verbose_name='Автор публикации',
@@ -33,7 +33,7 @@ class Post(BaseModel):
 
 
 class Category(BaseModel):
-    title = models.CharField('Заголовок', max_length=MAX_LIEGHT_FOR_CHARFIELD)
+    title = models.CharField('Заголовок', max_length=MAX_CHARFIELD_LENGHT)
     description = models.TextField('Описание')
     slug = models.SlugField(
         'Идентификатор', unique=True,
@@ -48,7 +48,7 @@ class Category(BaseModel):
 
 class Location(BaseModel):
     name = models.CharField(
-        'Название места', max_length=MAX_LIEGHT_FOR_CHARFIELD)
+        'Название места', max_length=MAX_CHARFIELD_LENGHT)
 
     class Meta:
         verbose_name = 'местоположение'

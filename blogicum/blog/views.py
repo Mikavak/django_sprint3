@@ -1,7 +1,7 @@
 from datetime import datetime
 from django.shortcuts import get_object_or_404, render
 
-from .constant import CONSTANT_COUNT_OF_POSTS
+from .constant import COUNT_OF_POSTS
 from .models import Post, Category
 
 
@@ -13,7 +13,7 @@ def post_filter(**kwargs):
 
 
 def index(request):
-    posts = post_filter()[:CONSTANT_COUNT_OF_POSTS]
+    posts = post_filter()[:COUNT_OF_POSTS]
     context = {'post_list': posts}
     return render(request, 'blog/index.html', context)
 
@@ -29,6 +29,6 @@ def category_posts(request, category_slug):
 
 
 def post_detail(request, post_id):
-    posts = get_object_or_404(post_filter(pk=post_id))
-    context = {'post': posts}
+    post = get_object_or_404(post_filter(pk=post_id))
+    context = {'post': post}
     return render(request, 'blog/detail.html', context)
